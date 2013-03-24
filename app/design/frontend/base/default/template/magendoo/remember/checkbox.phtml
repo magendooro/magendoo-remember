@@ -1,0 +1,16 @@
+<li id="remember-box" class="control">
+    <div class="input-box">
+        <input type="checkbox" name="remember[me]" value="1" class="checkbox" id="magendoo_login_remember"<?php if ($this->isRememberMeChecked()): ?> checked="checked"<?php endif; ?> title="<?php echo $this->__('Remember Me') ?>"  />
+    </div>
+    <label for="magendoo_login_remember"><?php echo $this->__('Remember Me on this computer') ?></label>
+</li>
+<?php if($this->showClearOld()): ?>
+<li id="remember-clear-box" class="control">
+    <div class="input-box">
+        <input type="checkbox" name="remember[clear]" value="1" class="checkbox" id="magendoo_login_remember_clear" checked="checked" title="<?php echo $this->__('Clear Old sessions') ?>" />
+    </div>
+    <label for="magendoo_login_remember_clear"><?php echo $this->__('Clear OLD "Remember Me" sessions (from other computers)') ?></label>
+</li>
+<?php endif; ?>
+
+

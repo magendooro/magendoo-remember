@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <customer_account_login>
+        <reference name="customer_form_login">
+            <block type="remember/checkbox" name="remember.checkbox" as="form.additional.info" template="magendoo/remember/checkbox.phtml" />
+        </reference>
+    </customer_account_login>
+    <customer_account_create>
+        <reference name="customer_form_register">
+            <block type="remember/checkbox" name="remember.checkbox" as="form.additional.info" template="magendoo/remember/checkbox.phtml" />
+        </reference>
+    </customer_account_create>
+
+    <remember_account_confirm>
+        <label>Customer Confirm Identity</label>
+        <remove name="right"/>
+        <remove name="left"/>
+        <reference name="head">
+            <action method="setTitle" translate="title" module="customer"><title>Confirm Your Identity</title></action>
+        </reference>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+            <action method="setHeaderTitle" translate="title" module="customer"><title>Confirm Your Identity</title></action>
+        </reference>
+        <reference name="content">
+            <block type="core/template" name="confirmPassword" template="magendoo/remember/confirm.phtml"/>
+        </reference>
+    </remember_account_confirm>
+
+
+</layout>

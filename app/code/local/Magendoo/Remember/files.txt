@@ -1,0 +1,4 @@
+app/code/local/Magendoo/Remember/
+app/design/frontend/base/default/layout/magendoo/
+app/design/frontend/base/default/template/magendoo/
+app/etc/modules/Magendoo_Remember.xml
