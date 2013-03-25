@@ -42,7 +42,7 @@ class Magendoo_Remember_AccountController extends Mage_Core_Controller_Front_Act
                 $customer = $session->getCustomer();
                 if($customer->validatePassword($pass)) {
                     $session->unsIsRememberMeLogged();
-                    $session->addSuccess($helper->__("Your identity has confirmed, now you are fully logged IN"));
+                    $session->addSuccess(Mage::helper('remember')->__("Your identity has confirmed, now you are fully logged IN"));
                     if($session->getRedirectAfterConfirm()) {
                         $this->_redirectUrl($session->getRedirectAfterConfirm());
                     } else {
@@ -51,13 +51,13 @@ class Magendoo_Remember_AccountController extends Mage_Core_Controller_Front_Act
                     $session->unsRedirectAfterConfirm();
                     return;
                 } else {
-                    $session->addError($helper->__("Invalid password"));
+                    $session->addError(Mage::helper('remember')->__("Invalid password"));
                 }
             } else {
-                $session->addError($helper->__("Please input yout password"));
+                $session->addError(Mage::helper('remember')->__("Please input yout password"));
             }
       } else {
-            $session->addNotice($helper->__("You are automatically authenticated, you must to confirm your identity  in order to access some actions."));
+            $session->addNotice(Mage::helper('remember')->__("You are automatically authenticated, you must to confirm your identity  in order to access some actions."));
       }
 
 

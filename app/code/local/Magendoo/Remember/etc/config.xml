@@ -96,7 +96,27 @@
                 </remember>
             </updates>
         </layout>
+        <translate>
+            <modules>
+                <Magendoo_Remember>
+                    <files>
+                        <default>Magendoo_Remember.csv</default>
+                    </files>
+                </Magendoo_Remember>
+            </modules>
+        </translate>
     </frontend>
+    <adminhtml>
+    	<translate>
+            <modules>
+                <Magendoo_Remember>
+                    <files>
+                        <default>Magendoo_Remember.csv</default>
+                    </files>
+                </Magendoo_Remember>
+            </modules>
+        </translate>
+    </adminhtml>
 
     <default>
         <remember>

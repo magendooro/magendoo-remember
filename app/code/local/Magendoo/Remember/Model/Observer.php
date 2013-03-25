@@ -22,8 +22,7 @@ class Magendoo_Remember_Model_Observer
     public function onLogin(Varien_Event_Observer $observer)
     {
 
-            $helper = Mage::helper('remember');
-            if(!$helper->isEnabled()) {
+            if(!Mage::helper('remember')->isEnabled()) {
                 return $this;
             }
 
@@ -48,8 +47,8 @@ class Magendoo_Remember_Model_Observer
                     $remember->deleteAllTokens($customer->getId());
                 }
 
-                if($helper->hasRememberCookie()) {
-                    $remember->deleteByRememberCookie($helper->getRememberCookie());
+                if(Mage::helper('remember')->hasRememberCookie()) {
+                    $remember->deleteByRememberCookie(Mage::helper('remember')->getRememberCookie());
                 }
 
 
@@ -59,10 +58,10 @@ class Magendoo_Remember_Model_Observer
                     $remember->setNonce($this->_generateToken($customer,'NONCE'));
 
                     $remember->save();
-                    $helper->setRememberCookie($remember);
+                    Mage::helper('remember')->setRememberCookie($remember);
 
                 } else {
-                    $helper->deleteRememberCookie();
+                    Mage::helper('remember')->deleteRememberCookie();
                 }
             } catch(Exception $e) {
                 Mage::logException($e);
@@ -76,16 +75,15 @@ class Magendoo_Remember_Model_Observer
 
         public function onLogout(Varien_Event_Observer $observer)
         {
-            $helper = Mage::helper('remember');
-            if(!$helper->isEnabled()) {
+            if(!Mage::helper('remember')->isEnabled()) {
                 return $this;
             }
 
             //Mage::dispatchEvent('customer_logout', array('customer' => $this->getCustomer()) );
             $customer= $observer->getEvent()->getCustomer();
-            if($helper->hasRememberCookie()) {
-                Mage::getModel('remember/remember')->deleteByRememberCookie($helper->getRememberCookie());
-                $helper->deleteRememberCookie();
+            if(Mage::helper('remember')->hasRememberCookie()) {
+                Mage::getModel('remember/remember')->deleteByRememberCookie(Mage::helper('remember')->getRememberCookie());
+                Mage::helper('remember')->deleteRememberCookie();
             }
         }
 
@@ -102,14 +100,13 @@ class Magendoo_Remember_Model_Observer
     public function autoLogin(Varien_Event_Observer $observer) {
 
 
-        $helper  = Mage::helper('remember');
         $session = Mage::getSingleton('customer/session');
         $action  =  $observer->getEvent()->getControllerAction();
 
 
 
 
-        if(!$action || $this->isInitialized() || !$helper->isEnabled()) {
+        if(!$action || $this->isInitialized() || !Mage::helper('remember')->isEnabled()) {
             return $this;
         }
         $this->setInitialized(true);
@@ -134,7 +131,7 @@ class Magendoo_Remember_Model_Observer
         }
 
 
-        if($session->isLoggedIn() || !$helper->hasRememberCookie()) {
+        if($session->isLoggedIn() || !Mage::helper('remember')->hasRememberCookie()) {
             return $this;
         }
 
@@ -155,34 +152,33 @@ class Magendoo_Remember_Model_Observer
         try {
 
             $rememberModel = Mage::getModel('remember/remember');
-            $rememberCookie = $helper->getRememberCookie();
+            $rememberCookie = Mage::helper('remember')->getRememberCookie();
             $remember = $rememberModel->getByRememberCookie($rememberCookie);
             if(!$remember->getId()) {
                 //expired token?
-                $helper->deleteRememberCookie();
+                Mage::helper('remember')->deleteRememberCookie();
                 return $this;
             }
 
             $customer = Mage::getModel('customer/customer')->load($remember->getCustomerId());
             if(!$customer->getId()) {
                 //customer not (more) exists
-                $helper->deleteRememberCookie();
+                Mage::helper('remember')->deleteRememberCookie();
                 return $this;
             }
 
             if($rememberCookie->getNonce() != $remember->getNonce()) {
                 //somebody stollen cookie?
-                Mage::getSingleton('core/session')->addError($helper->__('Someone else has used your login information to acccess this page!
-                    For your securityALL "Remember Me" tokens were removed. Please <a href="%s">LOG IN with your credentials</a> and check your data.',Mage::helper('customer')->getLoginUrl()));
+                Mage::getSingleton('core/session')->addError(Mage::helper('remember')->__('Someone else has used your login information to acccess this page! For your security ALL "Remember Me" tokens were removed. Please <a href="%s">LOG IN with your credentials</a> and check your data.',Mage::helper('customer')->getLoginUrl()));
 
-                Mage::getSingleton('core/session')->addNotice($helper->__('Your "Remember Me" token was used on %s from %s, browser %s',
+                Mage::getSingleton('core/session')->addNotice(Mage::helper('remember')->__('Your "Remember Me" token was used on %s from %s, browser %s',
                         $remember->getUpdated(). " (GMT time)",
                         $remember->getLastip(),
                         $remember->getUseragent()
                 ));
 
                 $rememberModel->deleteAllTokens($customer->getId());
-                $helper->deleteRememberCookie();
+                Mage::helper('remember')->deleteRememberCookie();
                 return $this;
             }
 
@@ -197,7 +193,7 @@ class Magendoo_Remember_Model_Observer
 
 
 
-            $helper->setRememberCookie($remember);
+            Mage::helper('remember')->setRememberCookie($remember);
 
 
         } catch(Exception $e) {
