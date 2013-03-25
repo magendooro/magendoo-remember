@@ -11,7 +11,8 @@ If the tokens do match, the user is logged in. One user can have login cookies o
 > - If the username and series are present but the token does not match, a theft is assumed. The user receives a strongly worded warning and all of the user's remembered sessions are deleted.
 > - If the username and series are not present, the login cookie is ignored.
 
-[source][1]
+[source][2]
+
 
 This extension is heavily inspired by:
 - Miller Charles's article "[Persistent Login Cookie Best Practice][1]"
@@ -19,6 +20,6 @@ This extension is heavily inspired by:
 - Gabriel Birke's  "[rememberme library][3]"
 
 
-[1]: http://fishbowl.pastiche.org/2004/01/19/persistent_login_cookie_best_practice.
+[1]: http://fishbowl.pastiche.org/2004/01/19/persistent_login_cookie_best_practice/
 [2]: http://jaspan.com/improved%5Fpersistent%5Flogin%5Fcookie%5Fbest%5Fpractice
 [3]: https://github.com/gbirke/rememberme
